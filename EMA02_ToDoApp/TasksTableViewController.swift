@@ -56,8 +56,9 @@ class TasksTableViewController: UITableViewController{
         if let cell = tableView.dequeueReusableCell(withIdentifier: "tasks", for: indexPath) as? TasksTableViewCell{
             let tasks = task[indexPath.row]
             cell.updateUI(task: tasks)
-            cell.cellButton.addTarget(self, action:"detailViewOfTask", for: .touchUpInside)
-//          #selector(TasksTableViewController.detailViewOfTask(_:))
+            //            var buttonTag = cell.cellButton.tag
+            //            buttonTag = indexPath.row
+            //            cell.cellButton.addTarget(self, action:#selector(TasksTableViewController.detailViewOfTask), for: .touchUpInside)
             return cell
         }else {
             
@@ -71,6 +72,7 @@ class TasksTableViewController: UITableViewController{
         
         let tasks = task[indexPath.row]
         let customTableViewCell = TasksTableViewCell()
+        
         
         if let cell = tableView.cellForRow(at: indexPath){
             
@@ -94,37 +96,28 @@ class TasksTableViewController: UITableViewController{
     }
     
     //Segue
-    func detailViewOfTask() {
-        performSegue(withIdentifier: "detailTask", sender: self)
-    }
-    
-    
-//    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-//        let tasks = task[indexPath.row]
-//        performSegue(withIdentifier: "detailTask", sender: tasks)
+//    func detailViewOfTask(sender: UIButton) {
+//        let buttonRow = sender.tag
+//        let taskNow = task[buttonRow]
+//        performSegue(withIdentifier: "detailTask", sender: taskNow)
 //    }
+    
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let tasks = task[indexPath.row]
+        performSegue(withIdentifier: "detailTask", sender: tasks)
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "detailTask"{
+            let navigationController = segue.destination as! UINavigationController
+            let controller = navigationController.topViewController as! TaskDetailViewController
         
-        if let destination = segue.destination as? TaskDetailViewController{
             if let task = sender as? Task{
-            
-                destination.newText = task
+                controller.detailTask = task
             }
-        }
-        
-        if segue.identifier == "detailTask" {
-            let button = sender as! UIButton
-            let view = button.superview!
-            let cell = view.superview as! TasksTableViewCell
-            
-            let indexPath = tableView.indexPath(for: cell)
-            
-            let detailViewController = segue.destination as! TaskDetailViewController
-            let tasks =
-            detailViewController.newText =
         }
     }
     
@@ -159,7 +152,7 @@ class TasksTableViewController: UITableViewController{
  // MARK: - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation
-
+ 
  */
 
 

@@ -14,7 +14,8 @@ class TasksTableViewCell: UITableViewCell {
     @IBOutlet weak var cellButton: UIButton!
     @IBOutlet weak var taskCellLabel: UILabel!
     //var task = [Task]()
-    override func awakeFromNib() {
+   
+        override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
@@ -35,12 +36,19 @@ class TasksTableViewCell: UITableViewCell {
     func checkAccessoryTyp(for task: Task, at cell: UITableViewCell){
         
         if task.checked == true{
-            cell.accessoryType = .checkmark
+            //cell.accessoryType = .checkmark
             task.checked = false
         }else{
-            cell.accessoryType = .none
+            //cell.accessoryType = .none
             task.checked = true
         }
     }
     
 }
+
+//extension UITableViewCell {
+//    
+//    var indexPath: IndexPath? {
+//        return (superview as? UITableView)?.indexPath(for: self)
+//    }
+//}

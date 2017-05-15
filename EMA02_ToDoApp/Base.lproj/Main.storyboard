@@ -18,28 +18,23 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="tasks" id="wEK-fg-WtV" customClass="TasksTableViewCell" customModule="EMA02_ToDoApp" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="tasks" id="wEK-fg-WtV" customClass="TasksTableViewCell" customModule="EMA02_ToDoApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wEK-fg-WtV" id="qjx-FV-GFI">
-                                    <rect key="frame" x="0.0" y="0.0" width="281" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="273" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="placeholder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lBA-Dv-GKd">
-                                            <rect key="frame" x="41" y="8" width="240" height="21"/>
+                                            <rect key="frame" x="30" y="11" width="251" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n2i-l3-upi">
-                                            <rect key="frame" x="10" y="10" width="22" height="22"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </button>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="cellButton" destination="n2i-l3-upi" id="LnS-8A-HBK"/>
                                     <outlet property="taskCellLabel" destination="lBA-Dv-GKd" id="5O3-wg-ZNv"/>
                                 </connections>
                             </tableViewCell>
@@ -139,7 +134,7 @@
         <!--Tasks-->
         <scene sceneID="0lb-dd-rx9">
             <objects>
-                <navigationController id="Tde-IL-i1S" customClass="TasksNavigationController" customModule="EMA02_ToDoApp" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="Tde-IL-i1S" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Tasks" image="tasks_tabbaricon" id="9Ub-Ks-dFs"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zOc-Eh-kC9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

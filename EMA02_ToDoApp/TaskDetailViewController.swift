@@ -11,21 +11,21 @@ import UIKit
 class TaskDetailViewController: UIViewController {
 
     @IBOutlet weak var taskLabel: UILabel!
-    private var _newText:Task?
+    private var _detailTask:Task?
     
-    var newText:Task!{
+    var detailTask:Task!{
         get{
-            return _newText
+            return _detailTask
         }
         set{
-        _newText = newValue
+        _detailTask = newValue
         }
     }
     
     override func viewDidLoad() {
-        if let newText = newText{
-            taskLabel.text = newText.title
-        }
+        //if let newTask = detailTask{
+            taskLabel.text = _detailTask?.title
+        //}
         super.viewDidLoad()
 
         
