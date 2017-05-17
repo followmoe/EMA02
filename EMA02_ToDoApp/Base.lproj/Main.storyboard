@@ -45,6 +45,13 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Your Tasks" id="R9h-FJ-BvI">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="d66-I4-eSW">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EnA-nt-NxF">
+                                <rect key="frame" x="16" y="7" width="71" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Category"/>
+                            </button>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="NA9-RC-KUv"/>
                     </navigationItem>
                     <connections>
@@ -124,6 +131,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="categoryPicker" destination="7A9-ut-fwj" id="bdm-tM-h4C"/>
+                        <outlet property="editTaskTextField" destination="rco-Ay-fxO" id="DLy-9w-KuD"/>
                         <outlet property="taskLabel" destination="MeM-QS-8Ft" id="LHZ-xb-pzK"/>
                     </connections>
                 </viewController>

@@ -8,9 +8,16 @@
 
 import UIKit
 
-class TaskDetailViewController: UIViewController {
-
+class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
     @IBOutlet weak var taskLabel: UILabel!
+    @IBOutlet weak var editTaskTextField: UITextField!
+    @IBOutlet weak var categoryPicker: UIPickerView!
+    
+    var categorys = ["Job", "Privat", "Freizeit", "Banking", "Einkauf"]
+    
+    
+    
     private var _detailTask:Task?
     
     var detailTask:Task!{
@@ -18,22 +25,24 @@ class TaskDetailViewController: UIViewController {
             return _detailTask
         }
         set{
-        _detailTask = newValue
+            _detailTask = newValue
         }
     }
     
     override func viewDidLoad() {
-        //if let newTask = detailTask{
-            taskLabel.text = _detailTask?.title
-        //}
+        
+        taskLabel.text = _detailTask?.title
+        
         super.viewDidLoad()
-
+        
+        categoryPicker.delegate = self
+        categoryPicker.dataSource = self
         
         // Do any additional setup after loading the view.
     }
     
     
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -46,15 +55,34 @@ class TaskDetailViewController: UIViewController {
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    /*-----------------------PickerView-----------------------------*/
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
     }
-    */
-
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return categorys.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return categorys[row]
+    }
+    
+    
+    
+    
+    
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

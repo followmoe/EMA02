@@ -19,7 +19,6 @@ class Task: Object{
     convenience init(title: String) {
         self.init()
         self._title = title
-        
     }
     var title: String{
         return _title!
@@ -32,6 +31,4 @@ class Task: Object{
             return _checked = newValue
         }
     }
-    
-    
 }
