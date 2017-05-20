@@ -21,6 +21,7 @@ class Task: Object{
         self.init()
         self._title = title
     }
+    
     var title: String{
         get{
             return _title
@@ -29,6 +30,7 @@ class Task: Object{
             return _title = newValue
         }
     }
+    
     var checked: Bool{
         get{
             return _checked

@@ -8,13 +8,37 @@
 
 import UIKit
 
-class AddTaskViewController: UIViewController {
+class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     
+    @IBOutlet weak var newCategoryPickerView: UIPickerView!
+    @IBOutlet weak var newTaskTextField: UITextField!
+    //fliegt nachher raus wenn datenbank gemacht wird
+    var sections = [Sections]()
+    
+    var sec1 = Sections(sectionName: "Einkaufen")
+    var sec2 = Sections(sectionName: "Beruf")
+    var sec3 = Sections(sectionName: "Studium")
+    var sec4 = Sections(sectionName: "Privat")
+    var sec5 = Sections(sectionName: "Hobby")
+    
     var delegate: TaskViewDelegate?
+    private var _addTask: Task?
+    
+    var addTask: Task{
+        get{
+            return _addTask!
+        }
+        set{
+            return _addTask = newValue
+        }
+    
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        newCategoryPickerView.delegate = self
+        newCategoryPickerView.dataSource = self
 
         // Do any additional setup after loading the view.
     }
@@ -23,14 +47,43 @@ class AddTaskViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    /*-------------------------------Bar Button Items-------------------------------------*/
     @IBAction func doneAction(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        
+        let newTask = Task()
+        if let newText = newTaskTextField.text{
+            newTask.title = newText
+            newTask.checked = false
+        }
+        delegate?.detailView!(self, didFinishAdding: newTask)
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        let ident = identifier()
+        let addTask = ident.addTask
+        delegate?.detailViewDidCancel(self, identifier: addTask)
     }
+    
+    /*------------------------------End Implementation of Bar Button Items---------------------------*/
+    
+    
+    /*------------------------------------------Category PickerView-----------------------------------*/
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return sections.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return sections[row].sectionName
+    }
+
+    
+    /*------------------------------End Implementation of Category PickerView-------------------------*/
+    
+    
     /*
     // MARK: - Navigation
 

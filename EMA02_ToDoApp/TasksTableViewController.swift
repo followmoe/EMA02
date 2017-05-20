@@ -107,21 +107,38 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     
     /*-------------------------------------Protocol TaskViewDelegate---------------------------------------*/
     
-    func detailViewDidCancel(_ controller: UIViewController) {
-        let taskDetailVC = controller as! TaskDetailViewController
-        print("Delegation Cancel works!")
+    func detailViewDidCancel(_ controller: UIViewController, identifier: String) {
         
-        taskDetailVC.dismiss(animated: true, completion: nil)
+        if identifier == "addTask"{
+            let addTaskVC = controller as! AddTaskViewController
+            addTaskVC.dismiss(animated: true, completion: nil)
+        }
+        if identifier == "editTask"{
+            let taskDetailVC = controller as! TaskDetailViewController
+            taskDetailVC.dismiss(animated: true, completion: nil)
+        }
     }
+    
     //Edit Cell Text !!!
     func detailView(_ controller: UIViewController, didFinishEditing task: Task) {
         let taskDetailVC = controller as! TaskDetailViewController
-        print(task.title)
         let indexPath = IndexPath(item: task.index, section: 0)
         let cell = tableView.cellForRow(at: indexPath) as! TasksTableViewCell
         cell.taskCellLabel.text = task.title
         taskDetailVC.dismiss(animated: true, completion: nil)
+    }
+    
+    func detailView(_ controller: UIViewController, didFinishAdding task: Task) {
+        let addTaskVC = controller as! AddTaskViewController
+        let count = self.task.count
+        self.task.append(task)
+        let indexPath = IndexPath(row: count, section: 0)
+        let indexPaths = [indexPath]
+        tableView.insertRows(at: indexPaths, with: .automatic)
+        //        cell.checkAccessoryTyp(for: task, at: cell)
+        //        vllt unnötig?
         
+        addTaskVC.dismiss(animated: true, completion: nil)
     }
     
     
@@ -146,6 +163,11 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
             let navigationController = segue.destination as! UINavigationController
             let controller = navigationController.topViewController as! AddTaskViewController
             controller.delegate = self
+            
+            if let task = sender as? Task{
+                task.index = self.task.count
+                controller.addTask = task
+            }
             
         }
     }

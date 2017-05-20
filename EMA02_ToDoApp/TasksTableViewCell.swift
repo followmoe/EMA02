@@ -11,7 +11,7 @@ import RealmSwift
 
 class TasksTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var cellButton: UIButton!
+    
     @IBOutlet weak var taskCellLabel: UILabel!
     //var task = [Task]()
    

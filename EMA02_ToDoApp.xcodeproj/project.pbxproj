@@ -12,10 +12,11 @@
 		064473121EA93BD500590F28 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064473111EA93BD500590F28 /* AppDelegate.swift */; };
 		064473171EA93BD500590F28 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 064473151EA93BD500590F28 /* Main.storyboard */; };
 		0644731C1EA93BD500590F28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0644731A1EA93BD500590F28 /* LaunchScreen.storyboard */; };
+		068C732E1ED0D29B00DA8081 /* Identifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068C732D1ED0D29B00DA8081 /* Identifiers.swift */; };
 		068DB0BC1EA9453C002A33E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 068DB0BB1EA9453C002A33E3 /* Assets.xcassets */; };
 		068DB0C41EA9477F002A33E3 /* TasksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068DB0C31EA9477F002A33E3 /* TasksTableViewController.swift */; };
 		068DB0C81EA947AC002A33E3 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068DB0C71EA947AC002A33E3 /* Task.swift */; };
-		068DB0CA1EA947C0002A33E3 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068DB0C91EA947C0002A33E3 /* Category.swift */; };
+		068DB0CA1EA947C0002A33E3 /* Sections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068DB0C91EA947C0002A33E3 /* Sections.swift */; };
 		068EC7461EC0771B00B45333 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068EC7451EC0771B00B45333 /* TaskDetailViewController.swift */; };
 		069E6E1A1EAB574B0096903C /* TasksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069E6E191EAB574B0096903C /* TasksTableViewCell.swift */; };
 		99655BDAE1C93C2725171850 /* Pods_EMA02_ToDoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF0ADB3AA0C7BCD77346FE4 /* Pods_EMA02_ToDoApp.framework */; };
@@ -29,10 +30,11 @@
 		064473161EA93BD500590F28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0644731B1EA93BD500590F28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0644731D1EA93BD500590F28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		068C732D1ED0D29B00DA8081 /* Identifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifiers.swift; sourceTree = "<group>"; };
 		068DB0BB1EA9453C002A33E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		068DB0C31EA9477F002A33E3 /* TasksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksTableViewController.swift; sourceTree = "<group>"; };
 		068DB0C71EA947AC002A33E3 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
-		068DB0C91EA947C0002A33E3 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		068DB0C91EA947C0002A33E3 /* Sections.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sections.swift; sourceTree = "<group>"; };
 		068EC7451EC0771B00B45333 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
 		069E6E191EAB574B0096903C /* TasksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksTableViewCell.swift; sourceTree = "<group>"; };
 		220AD3A36218171A47B3C81C /* Pods-EMA02_ToDoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EMA02_ToDoApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EMA02_ToDoApp/Pods-EMA02_ToDoApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -89,7 +91,8 @@
 			isa = PBXGroup;
 			children = (
 				068DB0C71EA947AC002A33E3 /* Task.swift */,
-				068DB0C91EA947C0002A33E3 /* Category.swift */,
+				068DB0C91EA947C0002A33E3 /* Sections.swift */,
+				068C732D1ED0D29B00DA8081 /* Identifiers.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -258,9 +261,10 @@
 				068DB0C41EA9477F002A33E3 /* TasksTableViewController.swift in Sources */,
 				069E6E1A1EAB574B0096903C /* TasksTableViewCell.swift in Sources */,
 				068EC7461EC0771B00B45333 /* TaskDetailViewController.swift in Sources */,
+				068C732E1ED0D29B00DA8081 /* Identifiers.swift in Sources */,
 				060DF54C1ED067E0008C9B51 /* EditCategoryViewController.swift in Sources */,
 				068DB0C81EA947AC002A33E3 /* Task.swift in Sources */,
-				068DB0CA1EA947C0002A33E3 /* Category.swift in Sources */,
+				068DB0CA1EA947C0002A33E3 /* Sections.swift in Sources */,
 				060DF54A1ED06638008C9B51 /* AddTaskViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

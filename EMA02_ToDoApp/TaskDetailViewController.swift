@@ -14,7 +14,7 @@ import UIKit
     
     @objc optional func detailView(_ controller: UIViewController, didFinishAdding task: Task)
     
-    func detailViewDidCancel(_ controller: UIViewController)
+    func detailViewDidCancel(_ controller: UIViewController, identifier: String)
     
     
 }
@@ -25,7 +25,14 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet weak var editTaskTextField: UITextField!
     @IBOutlet weak var categoryPicker: UIPickerView!
     
-    var categorys = ["Job", "Privat", "Freizeit", "Banking", "Einkauf"]
+    var sections = [Sections]()
+    
+    var sec1 = Sections(sectionName: "Einkaufen")
+    var sec2 = Sections(sectionName: "Beruf")
+    var sec3 = Sections(sectionName: "Studium")
+    var sec4 = Sections(sectionName: "Privat")
+    var sec5 = Sections(sectionName: "Hobby")
+    
     var delegate: TaskViewDelegate?
     private var _detailTask:Task!
     
@@ -58,8 +65,6 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     /*-----------------------Navigation Buttons Functions----------------------*/
     @IBAction func doneAction(_ sender: UIBarButtonItem) {
-        //TODO:
-        //Wenn done tapped dann soll der neue Textfield text der neue Taskname sein.
         if let textFieldText = editTaskTextField.text{
             if textFieldText.characters.count > 0 {
                 detailTask.title = textFieldText
@@ -70,8 +75,9 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     @IBAction func cancelAction(_ sender: UIBarButtonItem) {
         print(detailTask.index)
-        
-        self.delegate?.detailViewDidCancel(self)
+        let ident = identifier()
+        let editTask = ident.editTask
+        self.delegate?.detailViewDidCancel(self, identifier: editTask)
     }
     
     /*-----------------------PickerView-----------------------------*/
@@ -81,11 +87,11 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return categorys.count
+        return sections.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return categorys[row]
+        return sections[row].sectionName
     }
     /*---------------------------- Edn of PickerView Implementation-------------------------------------*/
     
