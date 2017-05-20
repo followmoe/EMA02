@@ -10,6 +10,9 @@ import UIKit
 
 class AddTaskViewController: UIViewController {
 
+    
+    var delegate: TaskViewDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

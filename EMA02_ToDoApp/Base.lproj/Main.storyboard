@@ -129,7 +129,7 @@
                     <navigationItem key="navigationItem" title="Edit Task" id="ala-C2-a9n">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="v9C-pO-B8d">
                             <connections>
-                                <action selector="cancelButtonTapped:" destination="8k5-TT-4yz" id="pyV-7j-hbu"/>
+                                <action selector="cancelAction:" destination="8k5-TT-4yz" id="Cy4-aO-Sno"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="Zth-J8-CD7">

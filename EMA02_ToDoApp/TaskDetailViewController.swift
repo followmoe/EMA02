@@ -8,15 +8,15 @@
 
 import UIKit
 
-@objc protocol TaskDetailViewDelegate{
-
-    @objc optional func detailView(_ controller: TaskDetailViewController, didFinishEditing task: Task)
+@objc protocol TaskViewDelegate{
     
-    @objc optional func detailView(_ controller: TaskDetailViewController, didFinishAdding task: Task)
+    @objc optional func detailView(_ controller: UIViewController, didFinishEditing task: Task)
     
-    func detailViewDidCancel(_ controller: TaskDetailViewController)
-
-
+    @objc optional func detailView(_ controller: UIViewController, didFinishAdding task: Task)
+    
+    func detailViewDidCancel(_ controller: UIViewController)
+    
+    
 }
 
 class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -26,10 +26,10 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet weak var categoryPicker: UIPickerView!
     
     var categorys = ["Job", "Privat", "Freizeit", "Banking", "Einkauf"]
-    var delegate: TaskDetailViewDelegate?
-    private var _detailTask:Task?
+    var delegate: TaskViewDelegate?
+    private var _detailTask:Task!
     
-    var detailTask:Task!{
+    var detailTask:Task{
         get{
             return _detailTask
         }
@@ -40,12 +40,13 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     override func viewDidLoad() {
         
-        taskLabel.text = _detailTask?.title
+        taskLabel.text = detailTask.title
         
         super.viewDidLoad()
         
         categoryPicker.delegate = self
         categoryPicker.dataSource = self
+        
         
         // Do any additional setup after loading the view.
     }
@@ -55,23 +56,25 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
         // Dispose of any resources that can be recreated.
     }
     
-    /*-----------------------Navigation Buttons----------------------*/
+    /*-----------------------Navigation Buttons Functions----------------------*/
     @IBAction func doneAction(_ sender: UIBarButtonItem) {
         //TODO:
         //Wenn done tapped dann soll der neue Textfield text der neue Taskname sein.
-        if let item = detailTask{
-        delegate?.detailView!(self, didFinishEditing: item)
-        }else {
-            //TODO: tue nichts
-            
-        
+        if let textFieldText = editTaskTextField.text{
+            if textFieldText.characters.count > 0 {
+                detailTask.title = textFieldText
+            }
+            delegate?.detailView!(self, didFinishEditing: detailTask)
         }
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
-        delegate?.detailViewDidCancel(self)
-        dismiss(animated: true, completion: nil)
+    @IBAction func cancelAction(_ sender: UIBarButtonItem) {
+        print("Debug Message!")
+        if self.delegate != nil{
+            print("Delegate != nil")
+        }
+        self.delegate?.detailViewDidCancel(self)
     }
     
     /*-----------------------PickerView-----------------------------*/
@@ -87,6 +90,7 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return categorys[row]
     }
+    /*---------------------------- Edn of PickerView Implementation-------------------------------------*/
     
     
     

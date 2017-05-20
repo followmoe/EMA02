@@ -9,10 +9,9 @@
 import UIKit
 import RealmSwift
 
-class TasksTableViewController: UITableViewController{
+class TasksTableViewController: UITableViewController, TaskViewDelegate{
     
     var task = [Task]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,7 +39,7 @@ class TasksTableViewController: UITableViewController{
     }
     
     // MARK: - Table view data source
-    
+    /* -----------------------------TableView--------------------------*/
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -66,7 +65,6 @@ class TasksTableViewController: UITableViewController{
             
         }
     }
-    
     //action when row is tapped
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -81,7 +79,6 @@ class TasksTableViewController: UITableViewController{
         }
     }
     
-    
     //allows edit of row
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -95,32 +92,47 @@ class TasksTableViewController: UITableViewController{
         }
     }
     
-    //Segue
-//    func detailViewOfTask(sender: UIButton) {
-//        let buttonRow = sender.tag
-//        let taskNow = task[buttonRow]
-//        performSegue(withIdentifier: "detailTask", sender: taskNow)
-//    }
-    
-    
+    //segue when accessorybutton is tapped
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let tasks = task[indexPath.row]
         performSegue(withIdentifier: "detailTask", sender: tasks)
     }
     
+    /*-----------------------------------End TableView Implementation--------------------------------------*/
+    
+    /*-------------------------------------Protocol TaskViewDelegate---------------------------------------*/
+    
+    func detailViewDidCancel(_ controller: UIViewController) {
+        let taskDetailVC = controller as! TaskDetailViewController
+        print("Delegation works!")
+        
+        taskDetailVC.dismiss(animated: true, completion: nil)
+    }
+    
+    /*-------------------------------------------End Protocoll TaskViewDelegate----------------------------*/
+    
+   /*-------------------------------------Segue------------------------------------------------------------*/
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "detailTask"{
             let navigationController = segue.destination as! UINavigationController
             let controller = navigationController.topViewController as! TaskDetailViewController
+            controller.delegate = self
         
             if let task = sender as? Task{
                 controller.detailTask = task
             }
         }
+        
+        if segue.identifier == "addTask"{
+            let navigationController = segue.destination as! UINavigationController
+            let controller = navigationController.topViewController as! AddTaskViewController
+            controller.delegate = self
+        
+        }
     }
-    
+    /*--------------------------------------------Segue-----------------------------------------------------*/
 }
 
 

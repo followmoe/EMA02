@@ -13,7 +13,7 @@ import RealmSwift
 class Task: Object{
     
     
-    dynamic internal var _title: String?
+    dynamic internal var _title = ""
     dynamic internal var _checked = false
     
     convenience init(title: String) {
@@ -21,7 +21,12 @@ class Task: Object{
         self._title = title
     }
     var title: String{
-        return _title!
+        get{
+            return _title
+        }
+        set{
+            return _title = newValue
+        }
     }
     var checked: Bool{
         get{
