@@ -66,14 +66,11 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
             }
             delegate?.detailView!(self, didFinishEditing: detailTask)
         }
-        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cancelAction(_ sender: UIBarButtonItem) {
-        print("Debug Message!")
-        if self.delegate != nil{
-            print("Delegate != nil")
-        }
+        print(detailTask.index)
+        
         self.delegate?.detailViewDidCancel(self)
     }
     

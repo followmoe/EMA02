@@ -15,6 +15,7 @@ class Task: Object{
     
     dynamic internal var _title = ""
     dynamic internal var _checked = false
+    var index = 0
     
     convenience init(title: String) {
         self.init()
