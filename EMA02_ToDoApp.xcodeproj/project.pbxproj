@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		060DF54A1ED06638008C9B51 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060DF5491ED06638008C9B51 /* AddTaskViewController.swift */; };
+		060DF54C1ED067E0008C9B51 /* EditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060DF54B1ED067E0008C9B51 /* EditCategoryViewController.swift */; };
 		064473121EA93BD500590F28 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064473111EA93BD500590F28 /* AppDelegate.swift */; };
 		064473171EA93BD500590F28 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 064473151EA93BD500590F28 /* Main.storyboard */; };
 		0644731C1EA93BD500590F28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0644731A1EA93BD500590F28 /* LaunchScreen.storyboard */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		060DF5491ED06638008C9B51 /* AddTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
+		060DF54B1ED067E0008C9B51 /* EditCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditCategoryViewController.swift; sourceTree = "<group>"; };
 		0644730E1EA93BD500590F28 /* EMA02_ToDoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EMA02_ToDoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		064473111EA93BD500590F28 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		064473161EA93BD500590F28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -103,6 +107,8 @@
 			children = (
 				068DB0C31EA9477F002A33E3 /* TasksTableViewController.swift */,
 				068EC7451EC0771B00B45333 /* TaskDetailViewController.swift */,
+				060DF5491ED06638008C9B51 /* AddTaskViewController.swift */,
+				060DF54B1ED067E0008C9B51 /* EditCategoryViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -252,8 +258,10 @@
 				068DB0C41EA9477F002A33E3 /* TasksTableViewController.swift in Sources */,
 				069E6E1A1EAB574B0096903C /* TasksTableViewCell.swift in Sources */,
 				068EC7461EC0771B00B45333 /* TaskDetailViewController.swift in Sources */,
+				060DF54C1ED067E0008C9B51 /* EditCategoryViewController.swift in Sources */,
 				068DB0C81EA947AC002A33E3 /* Task.swift in Sources */,
 				068DB0CA1EA947C0002A33E3 /* Category.swift in Sources */,
+				060DF54A1ED06638008C9B51 /* AddTaskViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

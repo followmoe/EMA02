@@ -8,6 +8,17 @@
 
 import UIKit
 
+@objc protocol TaskDetailViewDelegate{
+
+    @objc optional func detailView(_ controller: TaskDetailViewController, didFinishEditing task: Task)
+    
+    @objc optional func detailView(_ controller: TaskDetailViewController, didFinishAdding task: Task)
+    
+    func detailViewDidCancel(_ controller: TaskDetailViewController)
+
+
+}
+
 class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var taskLabel: UILabel!
@@ -15,9 +26,7 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet weak var categoryPicker: UIPickerView!
     
     var categorys = ["Job", "Privat", "Freizeit", "Banking", "Einkauf"]
-    
-    
-    
+    var delegate: TaskDetailViewDelegate?
     private var _detailTask:Task?
     
     var detailTask:Task!{
@@ -41,18 +50,27 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
         // Do any additional setup after loading the view.
     }
     
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    /*-----------------------Navigation Buttons----------------------*/
     @IBAction func doneAction(_ sender: UIBarButtonItem) {
+        //TODO:
+        //Wenn done tapped dann soll der neue Textfield text der neue Taskname sein.
+        if let item = detailTask{
+        delegate?.detailView!(self, didFinishEditing: item)
+        }else {
+            //TODO: tue nichts
+            
+        
+        }
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
+        delegate?.detailViewDidCancel(self)
         dismiss(animated: true, completion: nil)
     }
     
