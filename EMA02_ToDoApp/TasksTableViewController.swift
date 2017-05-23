@@ -72,14 +72,12 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let tasks = task[indexPath.row]
-        let customTableViewCell = TasksTableViewCell()
+        let cell = tableView.cellForRow(at: indexPath) as! TasksTableViewCell
         
         
-        if let cell = tableView.cellForRow(at: indexPath){
-            
-            customTableViewCell.checkAccessoryTyp(for: tasks, at: cell)
+            cell.checkAccessoryTyp(for: tasks, with: cell)
             tableView.deselectRow(at: indexPath, animated: true)
-        }
+        
     }
     
     //allows edit of row
