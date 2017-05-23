@@ -12,11 +12,13 @@ import RealmSwift
 class TasksTableViewCell: UITableViewCell {
 
     
+    @IBOutlet weak var checkedLabel: UILabel!
     @IBOutlet weak var taskCellLabel: UILabel!
     //var task = [Task]()
    
         override func awakeFromNib() {
         super.awakeFromNib()
+            
         // Initialization code
     }
 
@@ -36,10 +38,10 @@ class TasksTableViewCell: UITableViewCell {
     func checkAccessoryTyp(for task: Task, at cell: UITableViewCell){
         
         if task.checked == true{
-            //cell.accessoryType = .checkmark
+           // checkedLabel.text = "√"
             task.checked = false
         }else{
-            //cell.accessoryType = .none
+           // checkedLabel.text = ""
             task.checked = true
         }
     }
