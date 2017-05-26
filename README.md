@@ -11,3 +11,5 @@ Project for Class
 - Cleanup Code
 - Following MVC, move Code around
 - Implement Realm-Database
+- Optional: Implement TableView Sections
+- Optional: User can add Categorys
