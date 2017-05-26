@@ -13,11 +13,17 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     
     var task = [Task]()
     
-    let task1 = Task(title: "ios")
-    let task2 = Task(title: "android")
-    let task3 = Task(title: "windows")
-    let task4 = Task(title: "macos")
+    let task1 = Task(title: "ios", category: "Privat")
+    let task2 = Task(title: "android", category: "Hobby")
+    let task3 = Task(title: "windows", category: "Studium")
+    let task4 = Task(title: "macos", category: "Privat")
     
+    
+    
+    //    func filter(_ task: [Task], category: String)-> [String]{
+    //
+    //        task.filter({return $0.category == category})
+    //    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +32,9 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
         task.append(task3)
         task.append(task4)
         
-        tableView.reloadData()
+        
+        
+        self.tableView.reloadData()
         
         
         // Uncomment the following line to preserve selection between presentations
@@ -46,10 +54,49 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
+        
     }
+    
+    //    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    //        let movedObject = self.task[sourceIndexPath.row]
+    //        task.remove(at: sourceIndexPath.row)
+    //        task.insert(movedObject, at: destinationIndexPath.row)
+    //        self.tableView.reloadData()
+    //    }
+    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        
+        //        if section == 0{
+        //
+        //            let job = self.task.filter({return $0.category == "Beruf"})
+        //            return job.count
+        //        }
+        //
+        //        if section == 1{
+        //            let university = self.task.filter({return $0.category == "Studium"})
+        //            return university.count
+        //        }
+        //
+        //        if section == 2{
+        //            let shopping = self.task.filter({return $0.category == "Einkaufen"})
+        //            return shopping.count
+        //
+        //        }
+        //
+        //        if section == 3{
+        //            let privat = self.task.filter({return $0.category == "Privat"})
+        //            return privat.count
+        //
+        //        }
+        //
+        //        if section == 4{
+        //            let hobby = self.task.filter({return $0.category == "Hobby"})
+        //            return hobby.count
+        //
+        //        }
+        
         return task.count
     }
     
@@ -57,10 +104,8 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "tasks", for: indexPath) as? TasksTableViewCell{
             let tasks = task[indexPath.row]
+            
             cell.updateUI(task: tasks)
-            //            var buttonTag = cell.cellButton.tag
-            //            buttonTag = indexPath.row
-            //            cell.cellButton.addTarget(self, action:#selector(TasksTableViewController.detailViewOfTask), for: .touchUpInside)
             return cell
         }else {
             
@@ -75,8 +120,8 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
         let cell = tableView.cellForRow(at: indexPath) as! TasksTableViewCell
         
         
-            cell.checkAccessoryTyp(for: tasks, with: cell)
-            tableView.deselectRow(at: indexPath, animated: true)
+        cell.checkAccessoryTyp(for: tasks, with: cell)
+        tableView.deselectRow(at: indexPath, animated: true)
         
     }
     
@@ -98,8 +143,25 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
         let tasks = task[indexPath.row]
         let index = indexPath.row
         tasks.index = index
+        print(tasks.category)
         performSegue(withIdentifier: "detailTask", sender: tasks)
     }
+    
+    //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    //        if section == 0 {
+    //            return "Beruf"
+    //        }else if section == 1{
+    //            return "Studium"
+    //        }else if section == 2 {
+    //            return "Einkaufen"
+    //        }else if section == 3{
+    //            return "Privat"
+    //        }else {
+    //            return "Hobby"
+    //        }
+    //    }
+    
+    
     
     /*-----------------------------------End TableView Implementation--------------------------------------*/
     
@@ -120,9 +182,44 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     //Edit Cell Text !!!
     func detailView(_ controller: UIViewController, didFinishEditing task: Task) {
         let taskDetailVC = controller as! TaskDetailViewController
+        
+        
+        //        if category == "Beruf"{
+        //            let indexPath = IndexPath(item: task.index, section: 0)
+        //            if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
+        //                cell.taskCellLabel.text = task.title
+        //            }
+        //        }
+        //        if category == "Studium"{
+        //            let indexPath = IndexPath(item: task.index, section: 1)
+        //            if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
+        //                cell.taskCellLabel.text = task.title
+        //            }
+        //        }
+        //        if category == "Einkaufen"{
+        //            let indexPath = IndexPath(item: task.index, section: 2)
+        //            if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
+        //                cell.taskCellLabel.text = task.title
+        //            }
+        //        }
+        //        if category == "Privat"{
+        //            let indexPath = IndexPath(item: task.index, section: 3)
+        //            if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
+        //                cell.taskCellLabel.text = task.title
+        //            }
+        //        }
+        //        if category == "Hobby"{
+        //            let indexPath = IndexPath(item: task.index, section: 4)
+        //            if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
+        //                cell.taskCellLabel.text = task.title
+        //            }
+        //        }
         let indexPath = IndexPath(item: task.index, section: 0)
-        let cell = tableView.cellForRow(at: indexPath) as! TasksTableViewCell
-        cell.taskCellLabel.text = task.title
+        if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
+            cell.taskCellLabel.text = task.title
+            cell.categoryLabel.text = task.category
+        }
+        
         taskDetailVC.dismiss(animated: true, completion: nil)
     }
     

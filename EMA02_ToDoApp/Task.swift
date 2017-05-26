@@ -15,11 +15,13 @@ class Task: Object{
     
     dynamic internal var _title = ""
     dynamic internal var _checked = false
+    dynamic internal var _category = ""
     var index = 0
     
-    convenience init(title: String) {
+    convenience init(title: String, category: String) {
         self.init()
         self._title = title
+        self._category = category
     }
     
     var title: String{
@@ -37,6 +39,15 @@ class Task: Object{
         }
         set{
             return _checked = newValue
+        }
+    }
+    
+    var category: String{
+        get{
+            return _category
+        }
+        set{
+            return _category = newValue
         }
     }
 }

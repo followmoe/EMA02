@@ -11,22 +11,10 @@ import RealmSwift
 
 class Sections: Object{
 
-    dynamic internal var _sectionName = ""
-    
-    convenience init(sectionName: String) {
+    dynamic internal var title = ""
+    convenience init(title: String) {
         self.init()
-        self._sectionName = sectionName
+        self.title = title
     }
-    
-    var sectionName: String{
-        get{
-            return _sectionName
-        }
-        set{
-            return _sectionName = newValue
-        }
-    
-    }
-
 
 }

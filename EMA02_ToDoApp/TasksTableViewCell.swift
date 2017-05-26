@@ -12,6 +12,7 @@ import RealmSwift
 class TasksTableViewCell: UITableViewCell {
     
     
+    @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var checkedLabel: UILabel!
     @IBOutlet weak var taskCellLabel: UILabel!
     //var task = [Task]()
@@ -31,6 +32,7 @@ class TasksTableViewCell: UITableViewCell {
     func updateUI(task: Task){
         
         taskCellLabel.text = task.title
+        categoryLabel.text = task.category
         
         
     }

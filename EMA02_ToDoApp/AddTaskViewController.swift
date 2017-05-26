@@ -13,14 +13,6 @@ class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     @IBOutlet weak var newCategoryPickerView: UIPickerView!
     @IBOutlet weak var newTaskTextField: UITextField!
-    //fliegt nachher raus wenn datenbank gemacht wird
-    var sections = [Sections]()
-    
-    var sec1 = Sections(sectionName: "Einkaufen")
-    var sec2 = Sections(sectionName: "Beruf")
-    var sec3 = Sections(sectionName: "Studium")
-    var sec4 = Sections(sectionName: "Privat")
-    var sec5 = Sections(sectionName: "Hobby")
     
     var delegate: TaskViewDelegate?
     private var _addTask: Task?
@@ -73,11 +65,13 @@ class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return sections.count
+//        return sections.count
+        return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return sections[row].sectionName
+//        return sections[row].sectionName
+        return "Placeholder"
     }
 
     

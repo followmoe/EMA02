@@ -27,12 +27,12 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     var sections = [Sections]()
     
-    var sec1 = Sections(sectionName: "Einkaufen")
-    var sec2 = Sections(sectionName: "Beruf")
-    var sec3 = Sections(sectionName: "Studium")
-    var sec4 = Sections(sectionName: "Privat")
-    var sec5 = Sections(sectionName: "Hobby")
-    
+    var sec1 = Sections(title: "Einkaufen")
+    var sec2 = Sections(title: "Beruf")
+    var sec3 = Sections(title: "Studium")
+    var sec4 = Sections(title: "Privat")
+    var sec5 = Sections(title: "Hobby")
+
     var delegate: TaskViewDelegate?
     private var _detailTask:Task!
     
@@ -48,6 +48,11 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     override func viewDidLoad() {
         
         taskLabel.text = detailTask.title
+        sections.append(sec1)
+        sections.append(sec2)
+        sections.append(sec3)
+        sections.append(sec4)
+        sections.append(sec5)
         
         super.viewDidLoad()
         
@@ -74,7 +79,7 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     }
     
     @IBAction func cancelAction(_ sender: UIBarButtonItem) {
-        print(detailTask.index)
+        
         let ident = identifier()
         let editTask = ident.editTask
         self.delegate?.detailViewDidCancel(self, identifier: editTask)
@@ -91,7 +96,12 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return sections[row].sectionName
+        return sections[row].title
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let title = sections[row].title
+        detailTask.category = title
     }
     /*---------------------------- Edn of PickerView Implementation-------------------------------------*/
     
