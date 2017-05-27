@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 @objc protocol TaskViewDelegate{
     
@@ -27,12 +28,13 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     var sections = [Sections]()
     
-    var sec1 = Sections(title: "Einkaufen")
-    var sec2 = Sections(title: "Beruf")
-    var sec3 = Sections(title: "Studium")
-    var sec4 = Sections(title: "Privat")
-    var sec5 = Sections(title: "Hobby")
-
+    var sec1 = Sections(title: "No Category")
+    var sec2 = Sections(title: "Einkaufen")
+    var sec3 = Sections(title: "Beruf")
+    var sec4 = Sections(title: "Studium")
+    var sec5 = Sections(title: "Privat")
+    var sec6 = Sections(title: "Hobby")
+    
     var delegate: TaskViewDelegate?
     private var _detailTask:Task!
     
@@ -53,6 +55,7 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
         sections.append(sec3)
         sections.append(sec4)
         sections.append(sec5)
+        sections.append(sec6)
         
         super.viewDidLoad()
         
@@ -63,6 +66,10 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        editTaskTextField.becomeFirstResponder()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -70,8 +77,10 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     /*-----------------------Navigation Buttons Functions----------------------*/
     @IBAction func doneAction(_ sender: UIBarButtonItem) {
+        let realm = try! Realm()
         if let textFieldText = editTaskTextField.text{
             if textFieldText.characters.count > 0 {
+                
                 detailTask.title = textFieldText
             }
             delegate?.detailView!(self, didFinishEditing: detailTask)
@@ -101,7 +110,13 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let title = sections[row].title
-        detailTask.category = title
+            if title == "No Category"{
+                detailTask.category = ""
+            }else{
+                detailTask.category = title
+                
+            }
+        
     }
     /*---------------------------- Edn of PickerView Implementation-------------------------------------*/
     

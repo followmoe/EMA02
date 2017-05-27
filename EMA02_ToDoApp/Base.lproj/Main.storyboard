@@ -26,31 +26,30 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="placeholder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lBA-Dv-GKd">
-                                            <rect key="frame" x="43" y="8" width="230" height="21"/>
+                                            <rect key="frame" x="60" y="8" width="213" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="✔" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pCa-bW-KBR">
-                                            <rect key="frame" x="15" y="11" width="28" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WsH-yk-qpX">
-                                            <rect key="frame" x="51" y="25" width="222" height="14"/>
+                                            <rect key="frame" x="74" y="25" width="199" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JNQ-8Z-PcH">
+                                            <rect key="frame" x="3" y="3" width="51" height="38"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                            <state key="normal" title="✔"/>
+                                        </button>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="categoryLabel" destination="WsH-yk-qpX" id="sjZ-cH-S40"/>
-                                    <outlet property="checkedLabel" destination="pCa-bW-KBR" id="kvq-ZR-I3Z"/>
+                                    <outlet property="checkedButton" destination="JNQ-8Z-PcH" id="AS8-s2-eBE"/>
                                     <outlet property="taskCellLabel" destination="lBA-Dv-GKd" id="5O3-wg-ZNv"/>
                                 </connections>
                             </tableViewCell>
@@ -61,16 +60,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Your Tasks" id="R9h-FJ-BvI">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="d66-I4-eSW">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EnA-nt-NxF">
-                                <rect key="frame" x="16" y="7" width="71" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Category"/>
-                                <connections>
-                                    <segue destination="DiW-ky-K8B" kind="presentation" identifier="editCategory" id="WbP-8c-Eww"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="NA9-RC-KUv">
                             <connections>
                                 <segue destination="Ndz-K2-Yay" kind="presentation" identifier="addTask" id="Awn-RO-H8L"/>
@@ -121,7 +110,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7A9-ut-fwj">
-                                <rect key="frame" x="0.0" y="332" width="320" height="216"/>
+                                <rect key="frame" x="0.0" y="332" width="320" height="236"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.89617703049999997" green="0.89617703049999997" blue="0.89617703049999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </pickerView>
@@ -164,36 +153,6 @@
             </objects>
             <point key="canvasLocation" x="4852.5" y="-265.14084507042253"/>
         </scene>
-        <!--Edit Category-->
-        <scene sceneID="hO6-k7-rwS">
-            <objects>
-                <viewController id="xeJ-ZC-ItH" customClass="EditCategoryViewController" customModule="EMA02_ToDoApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="h07-Bs-Fx1"/>
-                        <viewControllerLayoutGuide type="bottom" id="2HV-4s-fHe"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="sKX-js-g3C">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Edit Category" id="DYd-TJ-sgT">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="v9r-Pw-3Oa">
-                            <connections>
-                                <action selector="cancelButtonTapped:" destination="xeJ-ZC-ItH" id="ycM-VV-EJO"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="6H8-EN-Qzc">
-                            <connections>
-                                <action selector="doneAction:" destination="xeJ-ZC-ItH" id="5RZ-G5-PRa"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="f6Q-zz-plS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4058" y="542"/>
-        </scene>
         <!--Tasks-->
         <scene sceneID="0lb-dd-rx9">
             <objects>
@@ -210,24 +169,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Byf-U5-hu8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2344" y="-265"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="wZ3-Kw-rox">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DiW-ky-K8B" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7Ep-xJ-RNQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="xeJ-ZC-ItH" kind="relationship" relationship="rootViewController" id="jEd-A8-LwN"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HaM-v1-I8k" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3227" y="542"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kvj-hn-yrP">
@@ -274,8 +215,9 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F5F-BE-dJv">
-                                <rect key="frame" x="0.0" y="352" width="320" height="216"/>
+                                <rect key="frame" x="0.0" y="335" width="320" height="233"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.87904505079999995" green="0.87904505079999995" blue="0.87904505079999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Category of Task:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="03j-1p-oNz">
                                 <rect key="frame" x="11" y="335" width="293" height="21"/>
@@ -306,7 +248,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3wj-FT-tFK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4853" y="-975"/>
+            <point key="canvasLocation" x="4852.5" y="-975"/>
         </scene>
     </scenes>
     <resources>

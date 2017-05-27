@@ -12,11 +12,12 @@ import RealmSwift
 
 class Task: Object{
     
-    
+    dynamic var taskId = NSUUID().uuidString
     dynamic internal var _title = ""
     dynamic internal var _checked = false
     dynamic internal var _category = ""
-    var index = 0
+    
+    dynamic var index = 0
     
     convenience init(title: String, category: String) {
         self.init()
@@ -49,5 +50,14 @@ class Task: Object{
         set{
             return _category = newValue
         }
+    }
+    
+    override class func primaryKey() -> String? {
+        return "taskId"
+    }
+    
+    override class func ignoredProperties() -> [String]{
+        return ["title", "checked", "category"]
+        
     }
 }

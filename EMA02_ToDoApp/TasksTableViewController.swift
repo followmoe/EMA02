@@ -11,37 +11,25 @@ import RealmSwift
 
 class TasksTableViewController: UITableViewController, TaskViewDelegate{
     
-    var task = [Task]()
+    var task: Results<Task>!
     
-    let task1 = Task(title: "ios", category: "Privat")
-    let task2 = Task(title: "android", category: "Hobby")
-    let task3 = Task(title: "windows", category: "Studium")
-    let task4 = Task(title: "macos", category: "Privat")
-    
-    
-    
-    //    func filter(_ task: [Task], category: String)-> [String]{
-    //
-    //        task.filter({return $0.category == category})
-    //    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        task.append(task1)
-        task.append(task2)
-        task.append(task3)
-        task.append(task4)
         
+        let realm = try! Realm()
         
-        
-        self.tableView.reloadData()
-        
-        
+        task = realm.objects(Task.self)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -51,52 +39,28 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     
     // MARK: - Table view data source
     /* -----------------------------TableView--------------------------*/
+    
+    // returns number of sections
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
         
     }
-    
+    // Moving rows implementation.
     //    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
     //        let movedObject = self.task[sourceIndexPath.row]
     //        task.remove(at: sourceIndexPath.row)
     //        task.insert(movedObject, at: destinationIndexPath.row)
     //        self.tableView.reloadData()
     //    }
+    //
+    //    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+    //        return true
+    //    }
     
-    
+    //return number of rows
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        
-        //        if section == 0{
-        //
-        //            let job = self.task.filter({return $0.category == "Beruf"})
-        //            return job.count
-        //        }
-        //
-        //        if section == 1{
-        //            let university = self.task.filter({return $0.category == "Studium"})
-        //            return university.count
-        //        }
-        //
-        //        if section == 2{
-        //            let shopping = self.task.filter({return $0.category == "Einkaufen"})
-        //            return shopping.count
-        //
-        //        }
-        //
-        //        if section == 3{
-        //            let privat = self.task.filter({return $0.category == "Privat"})
-        //            return privat.count
-        //
-        //        }
-        //
-        //        if section == 4{
-        //            let hobby = self.task.filter({return $0.category == "Hobby"})
-        //            return hobby.count
-        //
-        //        }
-        
         return task.count
     }
     
@@ -104,7 +68,6 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "tasks", for: indexPath) as? TasksTableViewCell{
             let tasks = task[indexPath.row]
-            
             cell.updateUI(task: tasks)
             return cell
         }else {
@@ -115,12 +78,8 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     }
     //action when row is tapped
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let tasks = task[indexPath.row]
         let cell = tableView.cellForRow(at: indexPath) as! TasksTableViewCell
-        
-        
-        cell.checkAccessoryTyp(for: tasks, with: cell)
+        cell.updateTaskIfChecked(when: !cell.checkedButton.isHidden, for: cell)
         tableView.deselectRow(at: indexPath, animated: true)
         
     }
@@ -129,11 +88,14 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
+    //TODO: delete Task from Realm
     //delete by swipe
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete{
-            task.remove(at: indexPath.row)
+        if editingStyle == .delete {
+            try! task.realm!.write {
+                let task = self.task[indexPath.row]
+                self.task.realm!.delete(task)
+            }
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
@@ -142,26 +104,14 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let tasks = task[indexPath.row]
         let index = indexPath.row
-        tasks.index = index
-        print(tasks.category)
+        //TODO: update index in realm
+        let realm = try! Realm()
+        
+        try! realm.write {
+            tasks.index = index
+        }
         performSegue(withIdentifier: "detailTask", sender: tasks)
     }
-    
-    //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    //        if section == 0 {
-    //            return "Beruf"
-    //        }else if section == 1{
-    //            return "Studium"
-    //        }else if section == 2 {
-    //            return "Einkaufen"
-    //        }else if section == 3{
-    //            return "Privat"
-    //        }else {
-    //            return "Hobby"
-    //        }
-    //    }
-    
-    
     
     /*-----------------------------------End TableView Implementation--------------------------------------*/
     
@@ -182,56 +132,21 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     //Edit Cell Text !!!
     func detailView(_ controller: UIViewController, didFinishEditing task: Task) {
         let taskDetailVC = controller as! TaskDetailViewController
-        
-        
-        //        if category == "Beruf"{
-        //            let indexPath = IndexPath(item: task.index, section: 0)
-        //            if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
-        //                cell.taskCellLabel.text = task.title
-        //            }
-        //        }
-        //        if category == "Studium"{
-        //            let indexPath = IndexPath(item: task.index, section: 1)
-        //            if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
-        //                cell.taskCellLabel.text = task.title
-        //            }
-        //        }
-        //        if category == "Einkaufen"{
-        //            let indexPath = IndexPath(item: task.index, section: 2)
-        //            if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
-        //                cell.taskCellLabel.text = task.title
-        //            }
-        //        }
-        //        if category == "Privat"{
-        //            let indexPath = IndexPath(item: task.index, section: 3)
-        //            if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
-        //                cell.taskCellLabel.text = task.title
-        //            }
-        //        }
-        //        if category == "Hobby"{
-        //            let indexPath = IndexPath(item: task.index, section: 4)
-        //            if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
-        //                cell.taskCellLabel.text = task.title
-        //            }
-        //        }
         let indexPath = IndexPath(item: task.index, section: 0)
         if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
             cell.taskCellLabel.text = task.title
             cell.categoryLabel.text = task.category
         }
-        
+        //TODO: Update Realm
         taskDetailVC.dismiss(animated: true, completion: nil)
     }
     
     func detailView(_ controller: UIViewController, didFinishAdding task: Task) {
+        let realm = try! Realm()
         let addTaskVC = controller as! AddTaskViewController
-        let count = self.task.count
-        self.task.append(task)
-        let indexPath = IndexPath(row: count, section: 0)
-        let indexPaths = [indexPath]
-        tableView.insertRows(at: indexPaths, with: .automatic)
-        //        cell.checkAccessoryTyp(for: task, at: cell)
-        //        vllt unnötig?
+        try! realm.write {
+            realm.add(task)
+        }
         
         addTaskVC.dismiss(animated: true, completion: nil)
     }
@@ -258,12 +173,6 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
             let navigationController = segue.destination as! UINavigationController
             let controller = navigationController.topViewController as! AddTaskViewController
             controller.delegate = self
-            
-            if let task = sender as? Task{
-                task.index = self.task.count
-                controller.addTask = task
-            }
-            
         }
     }
     /*--------------------------------------------Segue-----------------------------------------------------*/
@@ -296,9 +205,6 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
 
 /*
  // MARK: - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- 
  */
 
 

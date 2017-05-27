@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import RealmSwift
 
-class identifier: Object{
+
+class identifier{
 
 
     internal let addTask = "addTask"

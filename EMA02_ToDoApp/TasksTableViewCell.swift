@@ -12,10 +12,11 @@ import RealmSwift
 class TasksTableViewCell: UITableViewCell {
     
     
+    
+    @IBOutlet weak var checkedButton: UIButton!
     @IBOutlet weak var categoryLabel: UILabel!
-    @IBOutlet weak var checkedLabel: UILabel!
     @IBOutlet weak var taskCellLabel: UILabel!
-    //var task = [Task]()
+    var taskId: String?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,30 +30,27 @@ class TasksTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    
+    
     func updateUI(task: Task){
-        
+        taskId = task.taskId
         taskCellLabel.text = task.title
         categoryLabel.text = task.category
+        checkedButton.isHidden = task.checked
+        
         
         
     }
-    
-    func checkAccessoryTyp(for task: Task, with cell: TasksTableViewCell){
-        
-        if task.checked == true{
-            cell.checkedLabel.text = "✔"
-            task.checked = false
-        }else{
-            cell.checkedLabel.text = ""
-            task.checked = true
+    func updateTaskIfChecked(when ButtonIsHidden: Bool, for cell: TasksTableViewCell) {
+        if let realm = try? Realm(),
+            let id = self.taskId,
+            let task = realm.object(ofType: Task.self, forPrimaryKey: id as AnyObject) {
+            
+            try! realm.write {
+                    task.checked = ButtonIsHidden
+            }
+            cell.checkedButton.isHidden = task.checked
         }
     }
     
 }
-
-//extension UITableViewCell {
-//
-//    var indexPath: IndexPath? {
-//        return (superview as? UITableView)?.indexPath(for: self)
-//    }
-//}
