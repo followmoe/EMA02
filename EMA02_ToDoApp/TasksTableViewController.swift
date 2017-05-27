@@ -46,17 +46,6 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
         return 1
         
     }
-    // Moving rows implementation.
-    //    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-    //        let movedObject = self.task[sourceIndexPath.row]
-    //        task.remove(at: sourceIndexPath.row)
-    //        task.insert(movedObject, at: destinationIndexPath.row)
-    //        self.tableView.reloadData()
-    //    }
-    //
-    //    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-    //        return true
-    //    }
     
     //return number of rows
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -134,8 +123,7 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
         let taskDetailVC = controller as! TaskDetailViewController
         let indexPath = IndexPath(item: task.index, section: 0)
         if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
-            cell.taskCellLabel.text = task.title
-            cell.categoryLabel.text = task.category
+                cell.updateUI(task: task)
         }
         //TODO: Update Realm
         taskDetailVC.dismiss(animated: true, completion: nil)
@@ -167,7 +155,6 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
                 controller.detailTask = task
             }
         }
-        
         
         if segue.identifier == "addTask"{
             let navigationController = segue.destination as! UINavigationController

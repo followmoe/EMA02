@@ -80,8 +80,10 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
         let realm = try! Realm()
         if let textFieldText = editTaskTextField.text{
             if textFieldText.characters.count > 0 {
+                try! realm.write {
+                    detailTask.title = textFieldText
+                }
                 
-                detailTask.title = textFieldText
             }
             delegate?.detailView!(self, didFinishEditing: detailTask)
         }
@@ -109,13 +111,17 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let realm = try! Realm()
         let title = sections[row].title
+        try! realm.write {
             if title == "No Category"{
                 detailTask.category = ""
             }else{
                 detailTask.category = title
                 
             }
+        }
+        
         
     }
     /*---------------------------- Edn of PickerView Implementation-------------------------------------*/
