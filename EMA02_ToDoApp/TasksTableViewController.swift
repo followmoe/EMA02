@@ -70,15 +70,13 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
         let cell = tableView.cellForRow(at: indexPath) as! TasksTableViewCell
         cell.updateTaskIfChecked(when: !cell.checkedButton.isHidden, for: cell)
         tableView.deselectRow(at: indexPath, animated: true)
-        
     }
     
     //allows edit of row
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    //TODO: delete Task from Realm
-    //delete by swipe
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             try! task.realm!.write {
@@ -93,7 +91,6 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         let tasks = task[indexPath.row]
         let index = indexPath.row
-        //TODO: update index in realm
         let realm = try! Realm()
         
         try! realm.write {
@@ -125,7 +122,6 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
         if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
                 cell.updateUI(task: task)
         }
-        //TODO: Update Realm
         taskDetailVC.dismiss(animated: true, completion: nil)
     }
     

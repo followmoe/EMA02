@@ -14,14 +14,14 @@ class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var newCategoryPickerView: UIPickerView!
     @IBOutlet weak var newTaskTextField: UITextField!
     
-    var sections = [Sections]()
+    var categorys = [Category]()
     
-    var sec1 = Sections(title: "No Category")
-    var sec2 = Sections(title: "Einkaufen")
-    var sec3 = Sections(title: "Beruf")
-    var sec4 = Sections(title: "Studium")
-    var sec5 = Sections(title: "Privat")
-    var sec6 = Sections(title: "Hobby")
+    var sec1 = Category(title: "No Category")
+    var sec2 = Category(title: "Einkaufen")
+    var sec3 = Category(title: "Beruf")
+    var sec4 = Category(title: "Studium")
+    var sec5 = Category(title: "Privat")
+    var sec6 = Category(title: "Hobby")
     
     var delegate: TaskViewDelegate?
     
@@ -33,12 +33,12 @@ class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         super.viewDidLoad()
         newCategoryPickerView.delegate = self
         newCategoryPickerView.dataSource = self
-        sections.append(sec1)
-        sections.append(sec2)
-        sections.append(sec3)
-        sections.append(sec4)
-        sections.append(sec5)
-        sections.append(sec6)
+        categorys.append(sec1)
+        categorys.append(sec2)
+        categorys.append(sec3)
+        categorys.append(sec4)
+        categorys.append(sec5)
+        categorys.append(sec6)
         
         // Do any additional setup after loading the view.
     }
@@ -77,16 +77,16 @@ class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
-        return sections.count
+        return categorys.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return sections[row].title
+        return categorys[row].title
         
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let title = sections[row].title
+        let title = categorys[row].title
         if title == "No Category"{
             category = ""
         }else{

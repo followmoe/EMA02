@@ -16,7 +16,7 @@ class TasksTableViewCell: UITableViewCell {
     @IBOutlet weak var checkedButton: UIButton!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var taskCellLabel: UILabel!
-    var taskId: String?
+    private var taskId: String?
     
     override func awakeFromNib() {
         super.awakeFromNib()

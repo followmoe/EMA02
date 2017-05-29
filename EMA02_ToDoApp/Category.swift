@@ -9,12 +9,17 @@
 import Foundation
 import RealmSwift
 
-class Sections: Object{
+class Category: Object{
 
     dynamic internal var title = ""
     convenience init(title: String) {
         self.init()
         self.title = title
     }
+    
+    override class func primaryKey() -> String? {
+        return "title"
+    }
+    
 
 }
