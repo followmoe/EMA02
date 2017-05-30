@@ -14,6 +14,8 @@ class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var newCategoryPickerView: UIPickerView!
     @IBOutlet weak var newTaskTextField: UITextField!
     
+    
+//    temporary array until category tableview works!
     var categorys = [Category]()
     
     var sec1 = Category(title: "No Category")

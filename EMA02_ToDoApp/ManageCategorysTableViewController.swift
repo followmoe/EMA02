@@ -12,6 +12,11 @@ import RealmSwift
 class ManageCategorysTableViewController: UITableViewController {
     
     var category: Results<Category>!
+    enum tableViewSections: Int {
+        case editCategory =  0,
+        createCategory = 1,
+        showCategory = 2
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,30 +61,47 @@ class ManageCategorysTableViewController: UITableViewController {
             return 0
         }
     }
-    
+
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch indexPath.section {
-        case 0:
+        case tableViewSections.editCategory.rawValue:
+            return configureCell(with: tableView, with: indexPath)
+        case tableViewSections.createCategory.rawValue:
+            return configureCell(with: tableView, with: indexPath)
+        case tableViewSections.showCategory.rawValue:
+            return configureCell(with: tableView, with: indexPath)
+        default:
+            return UITableViewCell()
+        }
+        
+    }
+//    keeping the code clear in cellForRowAt:indexPath:
+    func configureCell(with tableView: UITableView, with indexPath: IndexPath)-> UITableViewCell{
+        
+        switch indexPath.section {
+        case tableViewSections.editCategory.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "editCategory", for: indexPath) as! EditCategoryTableViewCell
             return cell
-        case 1:
+        case tableViewSections.createCategory.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "addNewCategory", for: indexPath)
             return cell
-        case 2:
+        case tableViewSections.showCategory.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "showAllSections", for: indexPath)
             return cell
         default:
             return UITableViewCell()
         }
+        
     }
+
     
     
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        guard indexPath.section == 2 else {
+        guard indexPath.section == tableViewSections.showCategory.rawValue else {
             return false
         }
         // Return false if you do not want the specified item to be editable.
@@ -87,7 +109,7 @@ class ManageCategorysTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.section == 2 else {
+        guard indexPath.section == tableViewSections.showCategory.rawValue else {
             return
         }
         
@@ -96,9 +118,9 @@ class ManageCategorysTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0:
+        case tableViewSections.editCategory.rawValue:
             return "Create or Edit Category:"
-        case 2:
+        case tableViewSections.showCategory.rawValue:
             return "Show all Categorys:"
         default:
             return nil
@@ -107,7 +129,7 @@ class ManageCategorysTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
-        if section == 0{
+        if section == tableViewSections.editCategory.rawValue{
             return 2
         }else{
             return 20.0
@@ -115,9 +137,9 @@ class ManageCategorysTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 1{
+        if section == tableViewSections.createCategory.rawValue{
             return 5
-        }else if section == 0{
+        }else if section == tableViewSections.editCategory.rawValue{
             return 50.0
         }else {
             return 25.0
