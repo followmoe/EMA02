@@ -26,11 +26,4 @@ class EditCategoryTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    /*
-     für übergebene zelle
-     alles kategorien aus datenbank lesen
-     
-     
-     */
-    
 }

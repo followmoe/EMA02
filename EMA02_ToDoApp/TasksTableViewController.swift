@@ -13,7 +13,6 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     
     var task: Results<Task>!
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,11 +54,11 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     
     //creates cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "tasks", for: indexPath) as? TasksTableViewCell{
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "tasks", for: indexPath) as? TasksTableViewCell {
             let tasks = task[indexPath.row]
             cell.updateUI(task: tasks)
             return cell
-        }else {
+        } else {
             
             return UITableViewCell()
             
@@ -67,9 +66,10 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     }
     //action when row is tapped
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! TasksTableViewCell
-        cell.updateTaskIfChecked(when: !cell.checkedButton.isHidden, for: cell)
-        tableView.deselectRow(at: indexPath, animated: true)
+        if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell {
+            cell.updateTaskIfChecked(when: !cell.checkedButton.isHidden, for: cell)
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
     
     //allows edit of row
@@ -106,35 +106,38 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     func detailViewDidCancel(_ controller: UIViewController, identifier: String) {
         
         if identifier == "addTask"{
-            let addTaskVC = controller as! AddTaskViewController
-            addTaskVC.dismiss(animated: true, completion: nil)
+            if let addTaskVC = controller as? AddTaskViewController {
+                addTaskVC.dismiss(animated: true, completion: nil)
+            }
         }
         if identifier == "editTask"{
-            let taskDetailVC = controller as! TaskDetailViewController
-            taskDetailVC.dismiss(animated: true, completion: nil)
+            if let taskDetailVC = controller as? TaskDetailViewController {
+                taskDetailVC.dismiss(animated: true, completion: nil)
+            }
         }
     }
     
     //Edit Cell Text !!!
     func detailView(_ controller: UIViewController, didFinishEditing task: Task) {
-        let taskDetailVC = controller as! TaskDetailViewController
-        let indexPath = IndexPath(item: task.index, section: 0)
-        if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell{
+        if let taskDetailVC = controller as? TaskDetailViewController {
+            let indexPath = IndexPath(item: task.index, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell {
                 cell.updateUI(task: task)
+            }
+            taskDetailVC.dismiss(animated: true, completion: nil)
         }
-        taskDetailVC.dismiss(animated: true, completion: nil)
     }
     
     func detailView(_ controller: UIViewController, didFinishAdding task: Task) {
         let realm = try! Realm()
-        let addTaskVC = controller as! AddTaskViewController
-        try! realm.write {
-            realm.add(task)
+        if let addTaskVC = controller as? AddTaskViewController {
+            try! realm.write {
+                realm.add(task)
+            }
+            
+            addTaskVC.dismiss(animated: true, completion: nil)
         }
-        
-        addTaskVC.dismiss(animated: true, completion: nil)
     }
-    
     
     /*-------------------------------------------End Protocoll TaskViewDelegate----------------------------*/
     
@@ -143,25 +146,23 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "detailTask"{
-            let navigationController = segue.destination as! UINavigationController
-            let controller = navigationController.topViewController as! TaskDetailViewController
-            controller.delegate = self
-            
-            if let task = sender as? Task{
-                controller.detailTask = task
+            if let navigationController = segue.destination as? UINavigationController, let controller = navigationController.topViewController as? TaskDetailViewController {
+                controller.delegate = self
+                
+                if let task = sender as? Task {
+                    controller.detailTask = task
+                }
             }
         }
         
         if segue.identifier == "addTask"{
-            let navigationController = segue.destination as! UINavigationController
-            let controller = navigationController.topViewController as! AddTaskViewController
-            controller.delegate = self
+            if let navigationController = segue.destination as? UINavigationController, let controller = navigationController.topViewController as? AddTaskViewController {
+                controller.delegate = self
+            }
         }
     }
     /*--------------------------------------------Segue-----------------------------------------------------*/
 }
-
-
 
 /*
  // Override to support conditional editing of the table view.
@@ -189,5 +190,3 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
 /*
  // MARK: - Navigation
  */
-
-

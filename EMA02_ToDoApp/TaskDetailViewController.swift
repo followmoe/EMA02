@@ -9,15 +9,13 @@
 import UIKit
 import RealmSwift
 
-@objc protocol TaskViewDelegate{
+@objc protocol TaskViewDelegate {
     
     @objc optional func detailView(_ controller: UIViewController, didFinishEditing task: Task)
     
     @objc optional func detailView(_ controller: UIViewController, didFinishAdding task: Task)
     
     func detailViewDidCancel(_ controller: UIViewController, identifier: String)
-    
-    
 }
 
 class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -35,14 +33,14 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     var sec5 = Category(title: "Privat")
     var sec6 = Category(title: "Hobby")
     
-    var delegate: TaskViewDelegate?
-    private var _detailTask:Task!
+    weak var delegate: TaskViewDelegate?
+    private var _detailTask: Task!
     
-    var detailTask:Task{
-        get{
+    var detailTask: Task {
+        get {
             return _detailTask
         }
-        set{
+        set {
             _detailTask = newValue
         }
     }
@@ -62,7 +60,6 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
         categoryPicker.delegate = self
         categoryPicker.dataSource = self
         
-        
         // Do any additional setup after loading the view.
     }
     
@@ -78,7 +75,7 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     /*-----------------------Navigation Buttons Functions----------------------*/
     @IBAction func doneAction(_ sender: UIBarButtonItem) {
         let realm = try! Realm()
-        if let textFieldText = editTaskTextField.text{
+        if let textFieldText = editTaskTextField.text {
             if textFieldText.characters.count > 0 {
                 try! realm.write {
                     detailTask.title = textFieldText
@@ -91,7 +88,7 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     @IBAction func cancelAction(_ sender: UIBarButtonItem) {
         
-        let ident = identifier()
+        let ident = Identifier()
         let editTask = ident.editTask
         self.delegate?.detailViewDidCancel(self, identifier: editTask)
     }
@@ -116,21 +113,12 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
         try! realm.write {
             if title == "No Category"{
                 detailTask.category = ""
-            }else{
+            } else {
                 detailTask.category = title
-                
             }
         }
-        
-        
     }
     /*---------------------------- End of PickerView Implementation-------------------------------------*/
-    
-    
-    
-    
-    
-    
     /*
      // MARK: - Navigation
      

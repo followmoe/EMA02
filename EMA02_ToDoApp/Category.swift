@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class Category: Object{
+class Category: Object {
 
     dynamic internal var title = ""
     convenience init(title: String) {
@@ -20,6 +20,4 @@ class Category: Object{
     override class func primaryKey() -> String? {
         return "title"
     }
-    
-
 }

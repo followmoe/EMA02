@@ -8,12 +8,9 @@
 
 import Foundation
 
-
-class identifier{
-
+class Identifier {
 
     internal let addTask = "addTask"
     internal let editTask = "editTask"
-
 
 }

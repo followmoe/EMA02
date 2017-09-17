@@ -9,55 +9,49 @@
 import Foundation
 import RealmSwift
 
-
-class Task: Object{
+class Task: Object {
     
     dynamic var taskId = NSUUID().uuidString
-    dynamic internal var _title = ""
-    dynamic internal var _checked = false
-    dynamic internal var _category = ""
+    dynamic internal var title = ""
+    dynamic internal var checked = false
+    dynamic internal var category = ""
     
     dynamic var index = 0
     
     convenience init(title: String, category: String) {
         self.init()
-        self._title = title
-        self._category = category
+        self.title = title
+        self.category = category
     }
     
-    var title: String{
-        get{
-            return _title
-        }
-        set{
-            return _title = newValue
-        }
-    }
-    
-    var checked: Bool{
-        get{
-            return _checked
-        }
-        set{
-            return _checked = newValue
-        }
-    }
-    
-    var category: String{
-        get{
-            return _category
-        }
-        set{
-            return _category = newValue
-        }
-    }
+//    var title: String {
+//        get {
+//            return _title
+//        }
+//        set {
+//            return _title = newValue
+//        }
+//    }
+//
+//    var checked: Bool {
+//        get {
+//            return _checked
+//        }
+//        set {
+//            return _checked = newValue
+//        }
+//    }
+//
+//    var category: String {
+//        get {
+//            return _category
+//        }
+//        set {
+//            return _category = newValue
+//        }
+//    }
     
     override class func primaryKey() -> String? {
         return "taskId"
-    }
-    
-    override class func ignoredProperties() -> [String]{
-        return ["title", "checked", "category"]
-        
     }
 }

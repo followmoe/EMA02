@@ -12,7 +12,7 @@ import RealmSwift
 class ManageCategorysTableViewController: UITableViewController {
     
     var category: Results<Category>!
-    enum tableViewSections: Int {
+    enum TableViewSections: Int {
         case editCategory =  0,
         createCategory = 1,
         showCategory = 2
@@ -33,14 +33,12 @@ class ManageCategorysTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
     @IBAction func canceButtonTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
-    
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -62,15 +60,14 @@ class ManageCategorysTableViewController: UITableViewController {
         }
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch indexPath.section {
-        case tableViewSections.editCategory.rawValue:
+        case TableViewSections.editCategory.rawValue:
             return configureCell(with: tableView, with: indexPath)
-        case tableViewSections.createCategory.rawValue:
+        case TableViewSections.createCategory.rawValue:
             return configureCell(with: tableView, with: indexPath)
-        case tableViewSections.showCategory.rawValue:
+        case TableViewSections.showCategory.rawValue:
             return configureCell(with: tableView, with: indexPath)
         default:
             return UITableViewCell()
@@ -78,16 +75,19 @@ class ManageCategorysTableViewController: UITableViewController {
         
     }
 //    keeping the code clear in cellForRowAt:indexPath:
-    func configureCell(with tableView: UITableView, with indexPath: IndexPath)-> UITableViewCell{
+    func configureCell(with tableView: UITableView, with indexPath: IndexPath) -> UITableViewCell {
         
         switch indexPath.section {
-        case tableViewSections.editCategory.rawValue:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "editCategory", for: indexPath) as! EditCategoryTableViewCell
-            return cell
-        case tableViewSections.createCategory.rawValue:
+        case TableViewSections.editCategory.rawValue:
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "editCategory", for: indexPath) as? EditCategoryTableViewCell {
+                return cell
+            } else {
+                return UITableViewCell()
+            }
+        case TableViewSections.createCategory.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "addNewCategory", for: indexPath)
             return cell
-        case tableViewSections.showCategory.rawValue:
+        case TableViewSections.showCategory.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "showAllSections", for: indexPath)
             return cell
         default:
@@ -95,13 +95,10 @@ class ManageCategorysTableViewController: UITableViewController {
         }
         
     }
-
-    
-    
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        guard indexPath.section == tableViewSections.showCategory.rawValue else {
+        guard indexPath.section == TableViewSections.showCategory.rawValue else {
             return false
         }
         // Return false if you do not want the specified item to be editable.
@@ -109,7 +106,7 @@ class ManageCategorysTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.section == tableViewSections.showCategory.rawValue else {
+        guard indexPath.section == TableViewSections.showCategory.rawValue else {
             return
         }
         
@@ -118,9 +115,9 @@ class ManageCategorysTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case tableViewSections.editCategory.rawValue:
+        case TableViewSections.editCategory.rawValue:
             return "Create or Edit Category:"
-        case tableViewSections.showCategory.rawValue:
+        case TableViewSections.showCategory.rawValue:
             return "Show all Categorys:"
         default:
             return nil
@@ -129,19 +126,19 @@ class ManageCategorysTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
-        if section == tableViewSections.editCategory.rawValue{
+        if section == TableViewSections.editCategory.rawValue {
             return 2
-        }else{
+        } else {
             return 20.0
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == tableViewSections.createCategory.rawValue{
+        if section == TableViewSections.createCategory.rawValue {
             return 5
-        }else if section == tableViewSections.editCategory.rawValue{
+        } else if section == TableViewSections.editCategory.rawValue {
             return 50.0
-        }else {
+        } else {
             return 25.0
         }
     }

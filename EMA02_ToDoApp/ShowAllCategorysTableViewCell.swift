@@ -9,7 +9,6 @@
 import UIKit
 import RealmSwift
 
-
 class ShowAllCategorysTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {

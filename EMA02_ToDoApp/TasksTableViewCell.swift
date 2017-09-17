@@ -11,8 +11,6 @@ import RealmSwift
 
 class TasksTableViewCell: UITableViewCell {
     
-    
-    
     @IBOutlet weak var checkedButton: UIButton!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var taskCellLabel: UILabel!
@@ -30,24 +28,19 @@ class TasksTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    
-    
-    func updateUI(task: Task){
+    func updateUI(task: Task) {
         taskId = task.taskId
         taskCellLabel.text = task.title
         categoryLabel.text = task.category
         checkedButton.isHidden = task.checked
-        
-        
-        
     }
-    func updateTaskIfChecked(when ButtonIsHidden: Bool, for cell: TasksTableViewCell) {
+    func updateTaskIfChecked(when buttonIsHidden: Bool, for cell: TasksTableViewCell) {
         if let realm = try? Realm(),
             let id = self.taskId,
             let task = realm.object(ofType: Task.self, forPrimaryKey: id as AnyObject) {
             
             try! realm.write {
-                    task.checked = ButtonIsHidden
+                    task.checked = buttonIsHidden
             }
             cell.checkedButton.isHidden = task.checked
         }

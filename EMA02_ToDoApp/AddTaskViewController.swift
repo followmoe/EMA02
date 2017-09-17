@@ -10,11 +10,9 @@ import UIKit
 
 class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    
     @IBOutlet weak var newCategoryPickerView: UIPickerView!
     @IBOutlet weak var newTaskTextField: UITextField!
-    
-    
+
 //    temporary array until category tableview works!
     var categorys = [Category]()
     
@@ -25,12 +23,10 @@ class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     var sec5 = Category(title: "Privat")
     var sec6 = Category(title: "Hobby")
     
-    var delegate: TaskViewDelegate?
+    weak var delegate: TaskViewDelegate?
     
-
     private var category = ""
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         newCategoryPickerView.delegate = self
@@ -64,13 +60,12 @@ class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
-        let ident = identifier()
+        let ident = Identifier()
         let addTask = ident.addTask
         delegate?.detailViewDidCancel(self, identifier: addTask)
     }
     
     /*------------------------------End Implementation of Bar Button Items---------------------------*/
-    
     
     /*------------------------------------------Category PickerView-----------------------------------*/
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -91,15 +86,13 @@ class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         let title = categorys[row].title
         if title == "No Category"{
             category = ""
-        }else{
+        } else {
             category = title
         }
         
     }
     
-    
     /*------------------------------End Implementation of Category PickerView-------------------------*/
-    
     
     /*
      // MARK: - Navigation
