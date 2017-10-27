@@ -13,7 +13,6 @@ class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var newCategoryPickerView: UIPickerView!
     @IBOutlet weak var newTaskTextField: UITextField!
 
-//    temporary array until category tableview works!
     var categorys = [Category]()
     
     var sec1 = Category(title: "No Category")
@@ -25,7 +24,7 @@ class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     weak var delegate: TaskViewDelegate?
     
-    private var category = ""
+    var category = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +49,6 @@ class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         // Dispose of any resources that can be recreated.
     }
     
-    /*-------------------------------Bar Button Items-------------------------------------*/
     @IBAction func doneAction(_ sender: UIBarButtonItem) {
         //check if textfield text is set
         if let newText = newTaskTextField.text {
@@ -65,9 +63,9 @@ class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         delegate?.detailViewDidCancel(self, identifier: addTask)
     }
     
-    /*------------------------------End Implementation of Bar Button Items---------------------------*/
+}
+extension AddTaskViewController {
     
-    /*------------------------------------------Category PickerView-----------------------------------*/
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -91,17 +89,5 @@ class AddTaskViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
         
     }
-    
-    /*------------------------------End Implementation of Category PickerView-------------------------*/
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

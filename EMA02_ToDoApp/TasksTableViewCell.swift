@@ -34,7 +34,7 @@ class TasksTableViewCell: UITableViewCell {
         categoryLabel.text = task.category
         checkedButton.isHidden = task.checked
     }
-    func updateTaskIfChecked(when buttonIsHidden: Bool, for cell: TasksTableViewCell) {
+    func updateTaskIfChecked(when buttonIsHidden: Bool) {
         if let realm = try? Realm(),
             let id = self.taskId,
             let task = realm.object(ofType: Task.self, forPrimaryKey: id as AnyObject) {
@@ -42,7 +42,7 @@ class TasksTableViewCell: UITableViewCell {
             try! realm.write {
                     task.checked = buttonIsHidden
             }
-            cell.checkedButton.isHidden = task.checked
+            self.checkedButton.isHidden = task.checked
         }
     }
     

@@ -72,7 +72,6 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
         // Dispose of any resources that can be recreated.
     }
     
-    /*-----------------------Navigation Buttons Functions----------------------*/
     @IBAction func doneAction(_ sender: UIBarButtonItem) {
         let realm = try! Realm()
         if let textFieldText = editTaskTextField.text {
@@ -93,8 +92,8 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
         self.delegate?.detailViewDidCancel(self, identifier: editTask)
     }
     
-    /*-----------------------PickerView-----------------------------*/
-    
+}
+extension TaskDetailViewController {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -118,15 +117,5 @@ class TaskDetailViewController: UIViewController, UIPickerViewDelegate, UIPicker
             }
         }
     }
-    /*---------------------------- End of PickerView Implementation-------------------------------------*/
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

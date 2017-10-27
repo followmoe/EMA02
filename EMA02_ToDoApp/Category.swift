@@ -20,4 +20,6 @@ class Category: Object {
     override class func primaryKey() -> String? {
         return "title"
     }
+    
+    
 }

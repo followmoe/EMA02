@@ -26,4 +26,18 @@ class EditCategoryTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    
+    func updateUI(newText: String){
+        categoryTextfield.text = newText
+    }
+    @IBAction func updateCategories(_ sender: UIButton) {
+        
+    }
+//    func edit(with title: String){
+//        let realm = try! Realm()
+//        try! realm.write {
+//            Category.title = title
+//        }
+//    }
+//    
 }

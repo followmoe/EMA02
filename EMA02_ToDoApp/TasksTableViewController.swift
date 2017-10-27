@@ -19,11 +19,7 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
         let realm = try! Realm()
         
         task = realm.objects(Task.self)
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
         
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -36,9 +32,9 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - Table view data source
-    /* -----------------------------TableView--------------------------*/
-    
+}
+
+extension TasksTableViewController {
     // returns number of sections
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -54,20 +50,16 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
     
     //creates cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "tasks", for: indexPath) as? TasksTableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tasks", for: indexPath) as! TasksTableViewCell
             let tasks = task[indexPath.row]
             cell.updateUI(task: tasks)
             return cell
-        } else {
-            
-            return UITableViewCell()
-            
-        }
+        
     }
     //action when row is tapped
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell {
-            cell.updateTaskIfChecked(when: !cell.checkedButton.isHidden, for: cell)
+            cell.updateTaskIfChecked(when: !cell.checkedButton.isHidden)
             tableView.deselectRow(at: indexPath, animated: true)
         }
     }
@@ -98,11 +90,9 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
         }
         performSegue(withIdentifier: "detailTask", sender: tasks)
     }
-    
-    /*-----------------------------------End TableView Implementation--------------------------------------*/
-    
-    /*-------------------------------------Protocol TaskViewDelegate---------------------------------------*/
-    
+}
+
+extension TasksTableViewController {
     func detailViewDidCancel(_ controller: UIViewController, identifier: String) {
         
         if identifier == "addTask"{
@@ -138,10 +128,10 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
             addTaskVC.dismiss(animated: true, completion: nil)
         }
     }
+}
     
-    /*-------------------------------------------End Protocoll TaskViewDelegate----------------------------*/
-    
-    /*-------------------------------------Segue------------------------------------------------------------*/
+extension TasksTableViewController {
+   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
@@ -161,32 +151,7 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
             }
         }
     }
-    /*--------------------------------------------Segue-----------------------------------------------------*/
+   
 }
 
-/*
- // Override to support conditional editing of the table view.
- override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
- // Return false if you do not want the specified item to be editable.
- return true
- }
- */
 
-/*
- // Override to support rearranging the table view.
- override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
- 
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
- // Return false if you do not want the item to be re-orderable.
- return true
- }
- */
-
-/*
- // MARK: - Navigation
- */

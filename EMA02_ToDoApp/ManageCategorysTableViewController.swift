@@ -10,22 +10,34 @@ import UIKit
 import RealmSwift
 
 class ManageCategorysTableViewController: UITableViewController {
-    
+   
     var category: Results<Category>!
+    
     enum TableViewSections: Int {
         case editCategory =  0,
-        createCategory = 1,
-        showCategory = 2
+        showCategory = 1
     }
+    var categorys = [Category]()
+    
+    var sec1 = Category(title: "No Category")
+    var sec2 = Category(title: "Einkaufen")
+    var sec3 = Category(title: "Beruf")
+    var sec4 = Category(title: "Studium")
+    var sec5 = Category(title: "Privat")
+    var sec6 = Category(title: "Hobby")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        let nib = UINib(nibName: "EditCategoryTableViewCell", bundle: nil)
         
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        tableView.register(nib, forCellReuseIdentifier: "editCategory")
+        categorys.append(sec1)
+        categorys.append(sec2)
+        categorys.append(sec3)
+        categorys.append(sec4)
+        categorys.append(sec5)
+        categorys.append(sec6)
     }
     
     override func didReceiveMemoryWarning() {
@@ -33,9 +45,6 @@ class ManageCategorysTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func canceButtonTapped(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
@@ -43,18 +52,16 @@ class ManageCategorysTableViewController: UITableViewController {
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 3
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         switch section {
-        case 0:
+        case TableViewSections.editCategory.rawValue:
             return 1
-        case 1:
-            return 1
-        case 2:
-            return 1
+        case TableViewSections.showCategory.rawValue:
+            return categorys.count // category.count
         default:
             return 0
         }
@@ -64,38 +71,19 @@ class ManageCategorysTableViewController: UITableViewController {
         
         switch indexPath.section {
         case TableViewSections.editCategory.rawValue:
-            return configureCell(with: tableView, with: indexPath)
-        case TableViewSections.createCategory.rawValue:
-            return configureCell(with: tableView, with: indexPath)
-        case TableViewSections.showCategory.rawValue:
-            return configureCell(with: tableView, with: indexPath)
-        default:
-            return UITableViewCell()
-        }
-        
-    }
-//    keeping the code clear in cellForRowAt:indexPath:
-    func configureCell(with tableView: UITableView, with indexPath: IndexPath) -> UITableViewCell {
-        
-        switch indexPath.section {
-        case TableViewSections.editCategory.rawValue:
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "editCategory", for: indexPath) as? EditCategoryTableViewCell {
-                return cell
-            } else {
-                return UITableViewCell()
-            }
-        case TableViewSections.createCategory.rawValue:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "addNewCategory", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "editCategory", for: indexPath) as! EditCategoryTableViewCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
             return cell
         case TableViewSections.showCategory.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: "showAllSections", for: indexPath)
+            cell.textLabel?.text = categorys[indexPath.row].title // category[indexPath.row].title
             return cell
         default:
             return UITableViewCell()
         }
         
     }
-    
+
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         guard indexPath.section == TableViewSections.showCategory.rawValue else {
@@ -106,10 +94,13 @@ class ManageCategorysTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.section == TableViewSections.showCategory.rawValue else {
-            return
+        if indexPath.section == TableViewSections.showCategory.rawValue {
+            // query database for the titel of the cell and set label in first section to the cell title
+            let cell = tableView.cellForRow(at: indexPath) as! EditCategoryTableViewCell
+            let text = cell.textLabel?.text
+            let categoryTitle = category.filter("title = %@", text!)
+            cell.updateUI(newText: (categoryTitle.first?.title)!)
         }
-        
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -134,80 +125,21 @@ class ManageCategorysTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == TableViewSections.createCategory.rawValue {
-            return 5
-        } else if section == TableViewSections.editCategory.rawValue {
+        if section == TableViewSections.editCategory.rawValue {
             return 50.0
         } else {
             return 25.0
         }
     }
     
-    /*
-     ################### Funktions for filtering objects!! Two Versions which are doing the same! Work in Progress!
-     
-     
-     func filterForExsistingObject(for cell: EditCategoryTableViewCell){
-     if let realm = try? Realm(), let title = self.categoryTitle, let category = realm.object(ofType: Category.self, forPrimaryKey: title) {
-     
-     let exisitingCategorytitle = realm.objects(Category.self).filter("MATCHES %@", category.title)
-     
-     if exisitingCategorytitle.count > 0 {
-     
-     cell.categoryTextfield.text = category.title
-     
-     try! realm.write {
-     category.title = cell.categoryTextfield.text!
-     }
-     
-     }else{
-     try! realm.write {
-     realm.add(category)
-     }
-     }
-     
-     
-     }
-     }
-     func filterObjects(with category: Category, for cell: UITableViewCell){
-     if let realm = try? Realm(){
-     let key = category.title
-     let fetchedCategoryObject = realm.object(ofType: Category.self, forPrimaryKey: key)
-     //            let filteredTitles = realm.objects(Category.self).filter("key MATCHES %@", "")
-     if let categoryTitle = fetchedCategoryObject?.title {
-     try! realm.write {
-     category.title = categoryTitle
-     }
-     let editCell = cell as? EditCategoryTableViewCell
-     editCell?.categoryTextfield.text = category.title
-     }else{
-     try! realm.write {
-     realm.add(category)
-     }
-     }
-     }
-     }
-     */
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == TableViewSections.editCategory.rawValue {
+            return 100
+        }else {
+            return tableView.rowHeight
+        }
+        
+    }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }
