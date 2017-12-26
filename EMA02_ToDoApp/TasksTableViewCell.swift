@@ -38,9 +38,9 @@ class TasksTableViewCell: UITableViewCell {
         if let realm = try? Realm(),
             let id = self.taskId,
             let task = realm.object(ofType: Task.self, forPrimaryKey: id as AnyObject) {
-            
             try! realm.write {
-                    task.checked = buttonIsHidden
+                task.checked = buttonIsHidden
+                realm.add(task, update: true)
             }
             self.checkedButton.isHidden = task.checked
         }

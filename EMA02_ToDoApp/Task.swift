@@ -24,33 +24,6 @@ class Task: Object {
         self.category = category
     }
     
-//    var title: String {
-//        get {
-//            return _title
-//        }
-//        set {
-//            return _title = newValue
-//        }
-//    }
-//
-//    var checked: Bool {
-//        get {
-//            return _checked
-//        }
-//        set {
-//            return _checked = newValue
-//        }
-//    }
-//
-//    var category: String {
-//        get {
-//            return _category
-//        }
-//        set {
-//            return _category = newValue
-//        }
-//    }
-    
     override class func primaryKey() -> String? {
         return "taskId"
     }

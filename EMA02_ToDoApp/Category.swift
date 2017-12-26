@@ -12,13 +12,14 @@ import RealmSwift
 class Category: Object {
 
     dynamic internal var title = ""
+    dynamic internal var identifier = NSUUID().uuidString
     convenience init(title: String) {
         self.init()
         self.title = title
     }
     
     override class func primaryKey() -> String? {
-        return "title"
+        return "identifier"
     }
     
     

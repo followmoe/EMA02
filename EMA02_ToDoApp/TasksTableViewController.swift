@@ -19,17 +19,8 @@ class TasksTableViewController: UITableViewController, TaskViewDelegate{
         let realm = try! Realm()
         
         task = realm.objects(Task.self)
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tableView.reloadData()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        tableView.reloadData()
+
     }
     
 }
@@ -93,39 +84,36 @@ extension TasksTableViewController {
 }
 
 extension TasksTableViewController {
-    func detailViewDidCancel(_ controller: UIViewController, identifier: String) {
-        
-        if identifier == "addTask"{
-            if let addTaskVC = controller as? AddTaskViewController {
-                addTaskVC.dismiss(animated: true, completion: nil)
-            }
-        }
-        if identifier == "editTask"{
-            if let taskDetailVC = controller as? TaskDetailViewController {
-                taskDetailVC.dismiss(animated: true, completion: nil)
-            }
+    func detailViewDidCancel(_ controller: UIViewController) {
+        if let taskDetailVC = controller as? TaskDetailViewController {
+            taskDetailVC.dismiss(animated: true, completion: nil)
         }
     }
     
     //Edit Cell Text !!!
     func detailView(_ controller: UIViewController, didFinishEditing task: Task) {
+        let realm = try! Realm()
         if let taskDetailVC = controller as? TaskDetailViewController {
-            let indexPath = IndexPath(item: task.index, section: 0)
-            if let cell = tableView.cellForRow(at: indexPath) as? TasksTableViewCell {
-                cell.updateUI(task: task)
+            
+            try! realm.write {
+                realm.add(task, update: true)
             }
-            taskDetailVC.dismiss(animated: true, completion: nil)
+            
+            taskDetailVC.dismiss(animated: true, completion: {
+                self.tableView.reloadData()
+            })
         }
     }
     
     func detailView(_ controller: UIViewController, didFinishAdding task: Task) {
         let realm = try! Realm()
-        if let addTaskVC = controller as? AddTaskViewController {
+        if let addTaskVC = controller as? TaskDetailViewController {
             try! realm.write {
                 realm.add(task)
             }
-            
-            addTaskVC.dismiss(animated: true, completion: nil)
+            addTaskVC.dismiss(animated: true, completion: {
+                self.tableView.reloadData()
+            })
         }
     }
 }
@@ -138,16 +126,19 @@ extension TasksTableViewController {
         if segue.identifier == "detailTask"{
             if let navigationController = segue.destination as? UINavigationController, let controller = navigationController.topViewController as? TaskDetailViewController {
                 controller.delegate = self
-                
+                controller.controllerLabel = "Edit Task"
                 if let task = sender as? Task {
                     controller.detailTask = task
+                    controller.category = task.category
                 }
             }
         }
         
         if segue.identifier == "addTask"{
-            if let navigationController = segue.destination as? UINavigationController, let controller = navigationController.topViewController as? AddTaskViewController {
+            if let navigationController = segue.destination as? UINavigationController, let controller = navigationController.topViewController as? TaskDetailViewController {
                 controller.delegate = self
+                controller.title = "Add Task"
+                controller.controllerLabel = "Add new Task:"
             }
         }
     }
